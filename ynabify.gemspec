@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
 
   s.add_runtime_dependency     "dm-core"
-  s.add_runtime_dependency     "sqlite"
+  s.add_runtime_dependency     "sqlite3"
   s.add_runtime_dependency     "dm-sqlite-adapter"
 end
