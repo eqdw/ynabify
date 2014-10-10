@@ -4,6 +4,14 @@ describe Ynabify::Dispatcher do
   let( :argv       ) { %w(cat says meow)             }
   let( :dispatcher ) { Ynabify::Dispatcher.new(argv) }
 
+  context "self" do
+    context ".valid_commands" do
+      it "should return a list of all valid commands" do
+        expect(Ynabify::Dispatcher.valid_commands).to eq(Ynabify::Dispatcher::COMMANDS.keys)
+      end
+    end
+  end
+
   context "#initialize" do
     it "should parse out the sub-command" do
       expect(dispatcher.subcommand).to eq "cat"
@@ -50,7 +58,13 @@ describe Ynabify::Dispatcher do
       end
 
       it "should print out the error message" do
-        expect(Ynabify::Commands::Error).to receive(:execute).with(%w(says meow))
+        expect(Ynabify::Commands::Error).to receive(:execute)
+
+        dispatcher.dispatch
+      end
+
+      it "should pass in the subcommand (and not the opts)" do
+        expect(Ynabify::Commands::Error).to receive(:execute).with(%w(cat))
 
         dispatcher.dispatch
       end

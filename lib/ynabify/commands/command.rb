@@ -9,7 +9,8 @@ module Ynabify
       end
 
       def initialize(argv)
-        @flags = parse_flags(argv)
+        @params = parse_params( argv )
+        @flags  =  parse_flags( argv )
       end
 
       def parse_flags(argv)
@@ -24,6 +25,23 @@ module Ynabify
         end
 
         parsed
+      end
+
+      def parse_params(argv)
+        args = argv.dup
+        params = []
+
+        while( arg = args.shift)
+          # if it's a flag
+          if( match = (arg.match /^-/))
+            # burn off the flag and it's value
+            args.shift
+          else
+            params << arg
+          end
+        end
+
+        params
       end
 
       def execute

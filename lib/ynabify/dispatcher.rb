@@ -17,6 +17,10 @@ module Ynabify
       new(argv).dispatch
     end
 
+    def self.valid_commands
+      COMMANDS.keys
+    end
+
     def initialize(argv)
       @subcommand = argv.shift
       @opts       = argv
@@ -26,12 +30,12 @@ module Ynabify
       if valid_command?
         COMMANDS[@subcommand].execute(@opts)
       else
-        Ynabify::Commands::Error.execute(@opts)
+        Ynabify::Commands::Error.execute( [@subcommand] )
       end
     end
 
     def valid_command?
-      COMMANDS.keys.include? @subcommand
+      self.class.valid_commands.include? @subcommand
     end
   end
 end
