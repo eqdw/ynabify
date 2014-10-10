@@ -15,7 +15,7 @@ describe Ynabify::Dispatcher do
   end
 
   context "#valid_command?" do
-    Ynabify::Dispatcher::VALID_COMMANDS.each do |command|
+    Ynabify::Dispatcher::COMMANDS.keys.each do |command|
       let( :dispatcher ) { Ynabify::Dispatcher.new([command]) }
 
       it "should return true for #{command}" do
@@ -31,12 +31,14 @@ describe Ynabify::Dispatcher do
 
   context "#dispatch" do
     context "valid command" do
+      let( :argv ) { %w(help is a real command) }
+
       before(:each) do
         allow(dispatcher).to receive(:valid_command?).and_return(true)
       end
 
       it "should invoke the subcommand with the provided opts" do
-        expect(dispatcher).to receive(:cat).with( %w( says meow) )
+        expect(Ynabify::Commands::Help).to receive(:execute).with(%w( is a real command) )
 
         dispatcher.dispatch
       end
@@ -48,7 +50,7 @@ describe Ynabify::Dispatcher do
       end
 
       it "should print out the error message" do
-        expect(dispatcher).to receive(:error_message)
+        expect(Ynabify::Commands::Error).to receive(:execute).with(%w(says meow))
 
         dispatcher.dispatch
       end

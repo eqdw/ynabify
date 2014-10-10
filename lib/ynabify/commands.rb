@@ -1,0 +1,5 @@
+require 'ynabify/commands/command.rb'
+require 'ynabify/commands/help.rb'
+require 'ynabify/commands/edit.rb'
+require 'ynabify/commands/convert.rb'
+require 'ynabify/commands/error.rb'

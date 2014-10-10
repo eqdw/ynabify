@@ -5,7 +5,13 @@ module Ynabify
   class Dispatcher
     attr_reader :subcommand, :opts
 
-    VALID_COMMANDS = %w( help edit-rules convert )
+    VALID_COMMANDS = %w( help edit convert )
+
+    COMMANDS = {
+      "help"    => Ynabify::Commands::Help,
+      "edit"    => Ynabify::Commands::Edit,
+      "convert" => Ynabify::Commands::Convert
+    }
 
     def self.dispatch(argv)
       new(argv).dispatch
@@ -18,21 +24,14 @@ module Ynabify
 
     def dispatch
       if valid_command?
-        self.send(@subcommand, @opts)
+        COMMANDS[@subcommand].execute(@opts)
       else
-        puts error_message
+        Ynabify::Commands::Error.execute(@opts)
       end
     end
 
     def valid_command?
-      VALID_COMMANDS.include? @subcommand
-    end
-
-    def error_message
-      <<-EOT
-      valid subcommands are #{COMMANDS.join(", ")}
-      `ynabify help <subcommand>` for details on a subcommand
-      EOT
+      COMMANDS.keys.include? @subcommand
     end
   end
 end
