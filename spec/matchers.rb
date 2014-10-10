@@ -20,15 +20,15 @@ RSpec::Matchers.define :match_stdout do |check|
   end
 
   failure_message do
-    "expected to puts #{description}"
+    "expected to #{description}"
   end
 
   failure_message_when_negated do
-    "expected not to puts #{description}"
+    "expected not to #{description}"
   end
 
   description do
-    "match [#{check}] on stdout [#{@capture.string}]"
+    "match\n\n#{"-"*20}\n#{check}\n#{"-"*20}\n\non output\n\n#{"-"*20}\n#{@capture.string}\n#{"-"*20}\n"
   end
 
 end
