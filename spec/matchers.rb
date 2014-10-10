@@ -2,6 +2,8 @@ require 'rspec/expectations'
 
 RSpec::Matchers.define :match_stdout do |check|
 
+  supports_block_expectations
+
   @capture = nil
 
   match do |block|
