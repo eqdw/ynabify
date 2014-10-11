@@ -1,6 +1,9 @@
+# Apparently require order is picky in ruby :(
+# Rails spoils me
 require 'rubygems'
+
+require 'ynabify/utility'
 
 require 'ynabify/commands'
 require 'ynabify/version'
 require 'ynabify/dispatcher'
-require 'ynabify/utility'

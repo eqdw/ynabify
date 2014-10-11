@@ -5,13 +5,10 @@ module Ynabify
   class Dispatcher
     attr_reader :subcommand, :opts
 
-    VALID_COMMANDS = %w( help edit convert )
-
-    COMMANDS = {
-      "help"    => Ynabify::Commands::Help,
-      "edit"    => Ynabify::Commands::Edit,
-      "convert" => Ynabify::Commands::Convert
-    }
+    COMMANDS = %w(help edit convert).inject({}) do |hash, command|
+      hash[command] = "Ynabify::Commands::#{command.camelize}".constantize
+      hash
+    end
 
     def self.dispatch(argv)
       new(argv).dispatch
