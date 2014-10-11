@@ -4,6 +4,16 @@
 module Ynabify
   module Commands
     class Command
+      def self.lookup(command_name)
+        if Ynabify::Dispatcher.valid_command?(command_name.downcase)
+          "Ynabify::Commands::#{command_name.camelize}".constantize
+        end
+      end
+
+      def self.help
+        raise "you must implement help on command subclasses"
+      end
+
       def self.execute(argv)
         new(argv).execute
       end
@@ -42,6 +52,10 @@ module Ynabify
         end
 
         params
+      end
+
+      def lookup(command_name)
+        Ynabify::Commands::Command.lookup(command_name)
       end
 
       def execute

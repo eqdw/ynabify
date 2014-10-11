@@ -10,6 +10,21 @@ describe Ynabify::Dispatcher do
         expect(Ynabify::Dispatcher.valid_commands).to eq(Ynabify::Dispatcher::COMMANDS.keys)
       end
     end
+
+    context ".valid_command?" do
+      Ynabify::Dispatcher.valid_commands.each do |command|
+        let( :dispatcher ) { Ynabify::Dispatcher.new([command]) }
+
+        it "should return true for #{command}" do
+          expect( dispatcher.valid_command? ).to be true
+        end
+      end
+
+      it "should return false for any command not in the list" do
+        dispatcher = Ynabify::Dispatcher.new(["derp"])
+        expect( dispatcher.valid_command? ).to be false
+      end
+    end
   end
 
   context "#initialize" do
@@ -23,17 +38,10 @@ describe Ynabify::Dispatcher do
   end
 
   context "#valid_command?" do
-    Ynabify::Dispatcher::COMMANDS.keys.each do |command|
-      let( :dispatcher ) { Ynabify::Dispatcher.new([command]) }
+    it "should call the class method" do
+      expect(Ynabify::Dispatcher).to receive(:valid_command?).with("help")
 
-      it "should return true for #{command}" do
-        expect( dispatcher.valid_command? ).to be true
-      end
-    end
-
-    it "should return false for any command not in the list" do
-      dispatcher = Ynabify::Dispatcher.new(["derp"])
-      expect( dispatcher.valid_command? ).to be false
+      Ynabify::Dispatcher.new(["help"]).valid_command?
     end
   end
 

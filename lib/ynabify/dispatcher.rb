@@ -18,6 +18,10 @@ module Ynabify
       COMMANDS.keys
     end
 
+    def self.valid_command?(command)
+      valid_commands.include?(command)
+    end
+
     def initialize(argv)
       @subcommand = argv.shift
       @opts       = argv
@@ -32,7 +36,7 @@ module Ynabify
     end
 
     def valid_command?
-      self.class.valid_commands.include? @subcommand
+      self.class.valid_command? @subcommand
     end
   end
 end
