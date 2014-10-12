@@ -13,6 +13,19 @@ end
 
 
 describe Ynabify::Commands::Help do
+  context "self" do
+    context ".help" do
+      it "should return usage information for the help command" do
+        expect(described_class.help).to eq(<<-TEXT)
+ynabify help <command>
+Outputs usage information for the given command
+        TEXT
+
+      end
+    end
+  end
+
+
   context "#execute" do
     let( :argv    ) { ["test_command", "ignored"] }
     let( :command ) { described_class.new(argv)   }
@@ -36,7 +49,7 @@ describe Ynabify::Commands::Help do
     end
 
     it "should output the help text on stdout" do
-      expect{ command.execute}.
+      expect{ command.execute }.
         to match_stdout("This is a test of the emergency broadcast system")
     end
   end

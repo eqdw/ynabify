@@ -5,6 +5,13 @@
 module Ynabify
   module Commands
     class Help < Command
+      def self.help
+        <<-TEXT
+ynabify help <command>
+Outputs usage information for the given command
+        TEXT
+      end
+
       def execute
         help_command = lookup(@params.first)
 

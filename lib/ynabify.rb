@@ -2,8 +2,7 @@
 # Rails spoils me
 require 'rubygems'
 
-require 'ynabify/utility'
-
-require 'ynabify/commands'
 require 'ynabify/version'
+require 'ynabify/utility'
+require 'ynabify/commands'
 require 'ynabify/dispatcher'
