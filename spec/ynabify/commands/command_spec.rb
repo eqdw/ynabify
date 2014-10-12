@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Ynabify::Commands::Command do
-  let( :argv    ) { [ "command", "-a", "flag", "-A", "nother_flag"] }
+  let( :argv    ) { [ "command", "-a", "flag", "-A", "nother_flag", "-b", "-oolean_flag"] }
 
   context "self" do
     context ".lookup" do
@@ -51,15 +51,19 @@ describe Ynabify::Commands::Command do
 
   context "#parse_flags" do
     let( :command      ) { described_class.new(argv) }
-    let( :parsed_flags ) { command.parse_flags(argv)            }
+    let( :parsed_flags ) { command.parse_flags(argv) }
 
     it "should return a hash of flag-value pairs" do
-      expect( parsed_flags ).to eq("a" => "flag", "A" => "nother_flag")
+      expect( parsed_flags ).to include("a" => "flag", "A" => "nother_flag")
     end
 
     it "should ignore non-flag args" do
       expect( parsed_flags.keys   ).not_to include "command"
       expect( parsed_flags.values ).not_to include "command"
+    end
+
+    it "should work for boolean flags" do
+      expect( parsed_flags ).to include("b" => true, "oolean_flag" => true)
     end
   end
 

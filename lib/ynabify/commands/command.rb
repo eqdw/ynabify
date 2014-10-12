@@ -29,8 +29,20 @@ module Ynabify
 
         while(arg = args.shift)
           # if it's a flag
-          if( match = (arg.match /^-(.*)/) )
-            parsed[ match[1] ] = args.shift
+          if( match = is_flag?(arg) )
+
+            # if it's a boolean flag, the next arg is also a flag
+            # alternatively, if there are no args left but this one
+            # is a flag, it's a boolean flag
+            val = if args.length == 0
+                    true
+                  elsif is_flag?(args.first)
+                    true
+                  else
+                    args.shift
+                  end
+
+            parsed[ match[1] ] = val
           end
         end
 
@@ -43,7 +55,7 @@ module Ynabify
 
         while( arg = args.shift)
           # if it's a flag
-          if( match = (arg.match /^-/))
+          if( match = is_flag?(arg))
             # burn off the flag and it's value
             args.shift
           else
@@ -60,6 +72,12 @@ module Ynabify
 
       def execute
         raise "you should only execute a subclass of Command"
+      end
+
+      private
+
+      def is_flag?(arg)
+        arg.match(/^-(.*)/)
       end
     end
   end
