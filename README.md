@@ -31,7 +31,7 @@ Project Roadmap:
   - [X] Framework for programming subcommands
   - [X] Help framework
   - [ ] Subcommand argument validation
-  - [ ] (optional) Spin out CLI interface framework to separate gem
+  - [ ]  Spin out CLI interface framework to separate gem (optional)
 - [ ] Convert subcommand
   - [ ] Ingest, parse, change schema, output csv
   - [ ] Method of specifying input -> output schema mapping
