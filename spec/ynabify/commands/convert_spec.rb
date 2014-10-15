@@ -1,8 +1,10 @@
-module Ynabify
-  module Commands
-    class Convert < Command
-      def self.help
-        <<-TEXT
+require 'spec_helper'
+
+describe Ynabify::Commands::Convert do
+  context "self" do
+    context ".help" do
+      it "should return usage information for the help command" do
+        expect(described_class.help).to eq(<<-TEXT)
 ynabify convert
 Runs the conversion process. With no flags, consumes from STDIN
 and outputs STDOUT
