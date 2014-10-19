@@ -32,9 +32,22 @@ already have one
     context "valid" do
       before(:each) do
         expect(command).to receive(:validate).and_return(true)
+
+        @infile      = :stdio
+        @outfile     = :stdout
+        @interactive = false
+
+        expect(command).to receive( :infile       ).and_return( @infile      )
+        expect(command).to receive( :outfile      ).and_return( @outfile     )
+        expect(command).to receive( :interactive? ).and_return( @interactive )
       end
 
-      it "should instantiate a converter"
+      it "should instantiate a converter" do
+        expect(Ynabify::Conversion::Converter).to receive(:convert).
+          with(@infile, @outfile, @interactive)
+
+        command.execute
+      end
     end
 
     context "invalid" do
@@ -42,7 +55,11 @@ already have one
         expect(command).to receive(:validate).and_return(false)
       end
 
-      it "should not instantiate a converter"
+      it "should not instantiate a converter" do
+        expect(Ynabify::Conversion::Converter).not_to receive(:convert)
+
+        command.execute
+      end
     end
   end
 

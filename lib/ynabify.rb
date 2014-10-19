@@ -4,5 +4,6 @@ require 'rubygems'
 
 require 'ynabify/version'
 require 'ynabify/utility'
+require 'ynabify/conversion'
 require 'ynabify/commands'
 require 'ynabify/dispatcher'

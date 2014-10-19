@@ -24,6 +24,7 @@ already have one
 
       def execute
         if validate
+          Ynabify::Conversion::Converter.convert(infile, outfile, interactive?)
 
         end
       end
