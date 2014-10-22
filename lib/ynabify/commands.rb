@@ -1,5 +1,3 @@
-module Commands; end
-
 require 'ynabify/commands/command'
 require 'ynabify/commands/help'
 require 'ynabify/commands/edit'
