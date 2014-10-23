@@ -23,6 +23,9 @@ Accepted flags:
 -I --interactive: runs the converter in interactive mode, prompting
 the user to create a rewrite rule for any row that does not
 already have one
+
+-m --mapping: specifies the yaml file to use to specify the mapping
+of columns from input to output. If absent, will use the default
         TEXT
       end
     end
@@ -84,6 +87,18 @@ already have one
     end
 
     context "flag missing value" do
+      context "missing mapping" do
+        let(:argv) { ["-m"] }
+
+        it "should return false" do
+          expect(command.validate).to be false
+        end
+
+        it "should print flag value error for mapping" do
+          expect(command).to receive(:print_flag_needs_value).with(:mapping)
+          command.validate
+        end
+      end
       context "missing infile" do
         let(:argv) { ["-i", "-o", "outfile.csv"] }
 

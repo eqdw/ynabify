@@ -18,6 +18,9 @@ Accepted flags:
 -I --interactive: runs the converter in interactive mode, prompting
 the user to create a rewrite rule for any row that does not
 already have one
+
+-m --mapping: specifies the yaml file to use to specify the mapping
+of columns from input to output. If absent, will use the default
         TEXT
       end
 
@@ -47,6 +50,11 @@ already have one
           print_flag_needs_value(:outfile)
         end
 
+        if @flags['m'] == true || @flags["-mapping"] == true
+          valid = false
+          print_flag_needs_value(:mapping)
+        end
+
         valid
       end
 
@@ -57,9 +65,9 @@ or use flags.
         TEXT
       end
 
-      def print_flag_needs_value(in_or_out)
+      def print_flag_needs_value(flag)
         puts <<-TEXT
-Invalid invocation. Must provide filename for #{in_or_out.to_s} flag
+Invalid invocation. Must provide filename for #{flag.to_s} flag
         TEXT
       end
 
@@ -89,6 +97,10 @@ Invalid invocation. Must provide filename for #{in_or_out.to_s} flag
 
       def interactive?
         @flags["I"] || @flags["-interactive"]
+      end
+
+      def mapping_file
+        @flags["m"] || @flags["-mapping"]
       end
     end
   end
