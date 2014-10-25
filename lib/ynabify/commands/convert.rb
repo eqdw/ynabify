@@ -100,7 +100,7 @@ Invalid invocation. Must provide filename for #{flag.to_s} flag
       end
 
       def mapping_file
-        @flags["m"] || @flags["-mapping"]
+        @flags["m"] || @flags["-mapping"] || :default
       end
     end
   end

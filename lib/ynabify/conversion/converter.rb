@@ -1,8 +1,8 @@
 module Ynabify
   module Conversion
     class Converter
-      def self.convert(infile, outfile, interactive)
-        new(infile, outfile, interactive).convert
+      def self.convert(infile, outfile, interactive, mapping)
+        new(infile, outfile, interactive, mapping).convert
       end
 
       def initialize(infile, outfile, interactive, mapping)

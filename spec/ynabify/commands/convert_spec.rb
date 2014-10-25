@@ -187,4 +187,15 @@ of columns from input to output. If absent, will use the default
       expect(command.interactive?).not_to be true
     end
   end
+
+  context "#mapping_file" do
+    it "should return the value passed in with -m or --mapping" do
+      expect( described_class.new(["-m", "file.csv"]).mapping_file).to eq("file.csv")
+      expect( described_class.new(["--mapping", "file.csv"]).mapping_file).to eq("file.csv")
+    end
+
+    it "should return :default with no value passed in" do
+      expect( described_class.new([]).mapping_file).to eq(:default)
+    end
+  end
 end
