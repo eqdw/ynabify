@@ -1,12 +1,29 @@
+require 'yaml'
+
 module Ynabify
   module Conversion
     class Mapping
+      def self.init_from_file(filename)
+        yaml = YAML.load_file(filename)
+
+        new(yaml["input_columns"], yaml["output_columns"], yaml["maphash"])
+
+      end
+
       def initialize(input_columns, output_columns, maphash=nil)
         @input_columns  = input_columns
         @output_columns = output_columns
         @maphash        = maphash || default_maphash(@input_columns, @output_columns)
       end
 
+
+      def output_order
+        @output_columns
+      end
+
+      def [](out)
+        @maphash[out]
+      end
 
 
       private
