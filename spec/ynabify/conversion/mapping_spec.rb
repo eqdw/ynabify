@@ -1,11 +1,34 @@
 require 'spec_helper'
+require 'yaml'
 
 describe Ynabify::Conversion::Mapping do
   let( :input_columns  ) { ["Transaction Date", "Description", "Amount", "Category"]}
   let( :output_columns ) { ["Date", "Payee", "Category", "Memo", "Outflow", "Inflow" ]}
   let( :maphash        ) { {"Date" => "Transaction Date", "Payee" => "Description" }}
 
-   let( :mapping       ) { described_class.new(input_columns, output_columns, maphash) }
+  let( :mapping        ) { described_class.new(input_columns, output_columns, maphash) }
+
+
+  context "self" do
+    context ".init_from_file" do
+      let( :filename ) { "sample.yml" }
+      let( :parsed   ) { { "input_columns"  => :input,
+                           "output_columns" => :output,
+                           "maphash"        => nil } }
+
+
+      it "should import data from the file and pass it to the constructor" do
+        expect(YAML).to receive(:load_file).with(filename).
+          and_return(parsed)
+
+        expect(described_class).to receive(:new).with( parsed[ "input_columns"  ], 
+                                                      parsed[ "output_columns" ],
+                                                      parsed[ "maphash"        ])
+
+        described_class.init_from_file(filename)
+      end
+    end
+  end
 
   context "#initialize" do
     context "no maphash" do
